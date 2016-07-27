@@ -1,3 +1,19 @@
+h2{
+  margin-top:0;
+  margin-bottom:-5px;
+}
+
+h3{
+  margin-top:0;
+  margin-bottom:2px;
+  margin-left:6px;
+}
+
+p{
+  margin-top:2px;
+  margin-bottom:2px;
+  margin-left:6px;
+}
 #drawing {
   margin:auto;
   float:left;
@@ -83,7 +99,7 @@
 
 #scaleDiv{
   position:absolute;
-  top:92px;
+  top:55px;
   left:55px;
   width: 180px;
   z-index: 1;
