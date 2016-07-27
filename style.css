@@ -1,0 +1,93 @@
+#drawing {
+  margin:auto;
+  float:left;
+  display: inline-block;
+}
+
+#drawingStartDiv {
+  float:right;
+  margin:5px;
+}
+
+
+#xyCoord{
+  padding:10px;
+  background-color:#8ED231;
+  position:relative;
+  float:right;
+  align-content:center;
+  border:solid 2px #598B15;
+  border-radius:10px;
+  margin:5px;
+}
+
+#xCoordInput {
+    width:40%;
+}
+
+#yCoordInput {
+    width:40%;
+}
+
+#arrowheadDiv{
+  float:right;
+  background-color:#FFC300;
+  padding:5px;
+  border-radius:10px;
+  border:solid 1px #D48F17;
+  margin:5px;
+}
+
+.arrowhead {
+  height:10%;
+  width:10%;
+  border:solid 2px black;
+  padding:5px;
+  margin:2px;
+  border-radius:10px;
+  background-color:yellow;
+  
+}
+
+#supportDiv {
+  float:right;
+  background-color:#EE2070;
+  padding:5px;
+  border-radius:10px;
+  margin:5px;
+}
+
+.supportImage {
+  height:30px;
+  width:30px;
+  border:solid 2px black;
+  padding:5px;
+  margin:2px;
+  border-radius:10px;
+  background-color:#20D5EE;
+}
+
+#none {
+  height:40px;
+  width:40px;
+  padding:0px;
+}
+
+#aeDiv {
+  float:right;
+  background-color:#BB6916;
+  padding:5px;
+  border-radius:10px;
+  margin:5px;
+}
+
+#scaleDiv{
+  position:absolute;
+  top:92px;
+  left:55px;
+  width: 180px;
+  z-index: 1;
+}
+#scaleInput{
+  width:35px;
+}

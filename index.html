@@ -1,1 +1,111 @@
-hello, world!
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Truss Analysis Web App</title>
+ 
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body style="background-color:powderblue;">
+    <h2 style="text-align:center">Truss Analysis App</h2>
+    <div id="coordinatesDisplay">Coordinates:</div>
+    <div id="drawing" style="background-color:white;">
+      <div id="scaleDiv">
+        : <input type="number" id="scaleInput">
+        <select id="scaleSelect">
+          <option value="ft">ft</option>
+          <option value="m">m</option>
+        </select>
+      </div>
+    </div>
+    <div id="rightSideColumn">
+      <div id="drawingStartDiv">
+        <button id="drawingStart" onclick="handlers.drawingStart()" value=0>Draw the Truss(Multi-line)<br>(Click to start)</button>
+      </div>
+      <div>
+        <button id="removeLineButton" disabled onclick="handlers.deleteElement(event)">Click to remove member<br>(Or press D key)</button>
+      </div>
+      
+      <div id="xyCoord">
+         <h3>Joint Coordinates</h3>
+         X = <input type="number" id="xCoordInput" >
+        <br>
+         Y = <input type="number" id="yCoordInput">
+        <br>
+        <button id="coordInputButton" onclick="handlers.updateValue()">Update</button>
+      </div>
+      <div id="arrowheadDiv">
+        <h3>Load</h3>
+        <p id="arrowheadNotice">Select a joint to add load<br>Or click on a load to change it</p>
+        <img class="arrowhead" id="arrowToRight" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-right.svg"/>
+        <img class="arrowhead" id="arrowToLeft" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-left.svg"/>
+        <img class="arrowhead" id="arrowToTop" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-top.svg"/>
+        <img class="arrowhead" id="arrowToBottom" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-bottom.svg"/>
+        <br>
+        <input id="loadValueInput" type="number">
+        <select id="loadUnitSelect">
+          <option value="lb">lb</option>
+          <option value="kip">kip</option>
+          <option value="N">N</option>
+        </select>
+        <br>
+        <button id="changeLoadButton" onclick="loadHandlers.changeLoad()" style="display:none;">Update</button>
+        <button id="deleteLoadButton" onclick="loadHandlers.deleteLoad()" style="display:none;">Delete Load</button>
+        <button id="addLoadButton" onclick="loadHandlers.addLoad()">Add Load</button>
+      </div>
+      <div id="supportDiv">
+        <h3>Support</h3>
+        <p id="supportNotice">Select a joint to add support<br>Or click on a support to change it</p>
+        <img class="supportImage" id="pinned" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FpinnedSupport.svg"/>
+        <img class="supportImage" id="rollerBottom" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportBottom.svg"/>
+        <img class="supportImage" id="rollerTop" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportTop.svg"/>
+        <img class="supportImage" id="rollerRight" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportRight.svg"/>
+        <img class="supportImage" id="rollerLeft" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportLeft.svg"/>
+        <br>
+        <button id="supportButton" onclick="supportHandlers.updateSupport()">Add/Update</button>
+        <button id="deleteSupportButton" onclick="supportHandlers.deleteSupport()" style="display:none;">Delete Load</button>
+      </div>
+      <div id="aeDiv">
+        <h3>Cross-Section Area<br>& Modulus of Elasticity</h3>
+        <p>Select a member(s) to start</p>
+        A = <input type="number" id="areaInput">
+        <select id="areaUnitSelect">
+          <option value="sqin">in^2</option>
+          <option value="sqcm">cm^2</option>
+          <option value="sqft">ft^2</option>
+        </select>
+        <button id="areaButton" onclick="aeHandlers.addArea()">Apply</button>
+        <button id="areaAllButton" onclick="aeHandlers.addAreaAll()">Apply to All</button>
+        <br>
+        E = <input type="number" id="eInput">
+        <select id="eUnitSelect">
+          <option value = "psi">psi</option>
+          <option value = "ksi">ksi</option>
+          <option value = "pa">Pa</option>
+        </select>
+        <button id="eButton" onclick="aeHandlers.addE()">Apply</button>
+        <button id="eAllButton" onclick="aeHandlers.addEAll()">Apply to All</button>
+      </div>
+      
+      <div id="computingDiv">
+        <h3>Analysis</h3>
+        <button id="forceButton" onclick="engine.forceDisplay()">Show Barforce</button>
+        <button id="stressButton" onclick="engine.stressDisplay()">Show Stress</button>
+        <button id="reactionButton" onclick="engine.reactionDisplay()">Show Reaction</button>
+        <button id="displacementButton" onclick="engine.displacementDisplay()">Show Displacement</button>
+        <button id="eraseButton" onclick="engine.eraseForceDisplay();engine.eraseStressDisplay();engine.eraseDisplacementDisplay();engine.eraseReactionDisplay()">Stop Displaying</button>
+      </div>
+
+    </div>
+    
+    
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="svg.js"></script>
+    <script src="svg.draggable.js"></script>
+    <script src="math.js"></script>
+    <script src="client.js"></script>
+
+  </body>
+</html>
