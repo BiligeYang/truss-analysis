@@ -14,9 +14,9 @@ p{
   margin-bottom:2px;
   margin-left:6px;
 }
+
 #drawing {
   margin:auto;
-  float:left;
   display: inline-block;
 }
 
@@ -27,22 +27,20 @@ p{
 
 
 #xyCoord{
-  padding:10px;
+  padding:5px;
   background-color:#8ED231;
-  position:relative;
   float:right;
-  align-content:center;
   border:solid 2px #598B15;
   border-radius:10px;
   margin:5px;
 }
 
 #xCoordInput {
-    width:40%;
+    width:40px;
 }
 
 #yCoordInput {
-    width:40%;
+    width:40px;
 }
 
 #arrowheadDiv{
@@ -62,7 +60,6 @@ p{
   margin:2px;
   border-radius:10px;
   background-color:yellow;
-  
 }
 
 #supportDiv {
@@ -106,4 +103,12 @@ p{
 }
 #scaleInput{
   width:35px;
+}
+ 
+#computingDiv{
+  float:right;
+  background-color:#34495E;
+  padding:5px;
+  border-radius:10px;
+  margin:5px;
 }
