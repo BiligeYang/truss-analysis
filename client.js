@@ -243,31 +243,31 @@ var jointPoints = {
     if (supportType === "rollerBottom") {
       this.points[circleIndex].support = "rollerBottom";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportBottom.svg")
+        draw.image("rollerSupportBottom.svg")
         .move((this.points[circleIndex].xValue - 15), (this.points[circleIndex].yValue))
         .size(30, 30).back().addClass("support rollerBottom");
     } else if (supportType === "rollerTop") {
       this.points[circleIndex].support = "rollerTop";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportTop.svg")
+        draw.image("rollerSupportTop.svg")
         .move((this.points[circleIndex].xValue - 15), (this.points[circleIndex].yValue - 30))
         .size(30, 30).back().addClass("support rollerTop");
     } else if (supportType === "rollerRight") {
       this.points[circleIndex].support = "rollerRight";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportRight.svg")
+        draw.image("rollerSupportRight.svg")
         .move((this.points[circleIndex].xValue), (this.points[circleIndex].yValue - 15))
         .size(30, 30).back().addClass("support rollerRight");
     } else if (supportType === "rollerLeft") {
       this.points[circleIndex].support = "rollerLeft";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportLeft.svg")
+        draw.image("rollerSupportLeft.svg")
         .move((this.points[circleIndex].xValue - 30), (this.points[circleIndex].yValue - 15))
         .size(30, 30).back().addClass("support rollerLeft");
     } else if (supportType === "pinned") {
       this.points[circleIndex].support = "pinned";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FpinnedSupport.svg")
+        draw.image("pinnedSupport.svg")
         .move((this.points[circleIndex].xValue - 18), (this.points[circleIndex].yValue - 6))
         .size(36, 36).back().addClass("support pinned");
     }
@@ -279,31 +279,31 @@ var jointPoints = {
     if (newSupportType === "rollerBottom") {
       this.points[circleIndex].support = "rollerBottom";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportBottom.svg")
+        draw.image("rollerSupportBottom.svg")
         .move((this.points[circleIndex].xValue - 15), (this.points[circleIndex].yValue))
         .size(30, 30).back().addClass("support rollerBottom");
     } else if (newSupportType === "rollerTop") {
       this.points[circleIndex].support = "rollerTop";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportTop.svg")
+        draw.image("rollerSupportTop.svg")
         .move((this.points[circleIndex].xValue - 15), (this.points[circleIndex].yValue - 30))
         .size(30, 30).back().addClass("support rollerTop");
     } else if (newSupportType === "rollerRight") {
       this.points[circleIndex].support = "rollerRight";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportRight.svg")
+        draw.image("rollerSupportRight.svg")
         .move((this.points[circleIndex].xValue), (this.points[circleIndex].yValue - 15))
         .size(30, 30).back().addClass("support rollerRight");
     } else if (newSupportType === "rollerLeft") {
       this.points[circleIndex].support = "rollerLeft";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportLeft.svg")
+        draw.image("rollerSupportLeft.svg")
         .move((this.points[circleIndex].xValue - 30), (this.points[circleIndex].yValue - 15))
         .size(30, 30).back().addClass("support rollerLeft");
     } else if (newSupportType === "pinned") {
       this.points[circleIndex].support = "pinned";
       this.points[circleIndex].supportDisplay =
-        draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FpinnedSupport.svg")
+        draw.image("pinnedSupport.svg")
         .move((this.points[circleIndex].xValue - 18), (this.points[circleIndex].yValue - 6))
         .size(36, 36).back().addClass("support pinned");
     }
