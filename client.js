@@ -601,7 +601,7 @@ var handlers = { //The methods here handles all direct interaction with the user
   },
   drawingStart: function() { //when the drawingStartButton is clicked, this function runs
     drawingStartButton.value = 1 - drawingStartButton.value; //changes the value for the button between 0 and 1 when clicked
-    if (drawingStartButton.value === '1') {
+    if (drawingStartButton.value === '1' && scaleValue !== '' && scaleValue != 0) {
       drawingStartButton.innerHTML = 'Multi-Line<br>(ESC to stop drawing)';
       drawInDom.addEventListener('click', this.drawPolyline);
       window.addEventListener('mousemove', handlers.mouseFollowingLine);
