@@ -2,8 +2,8 @@
 // Get the browser's window's height and width
 var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-var drawingBoardWidth = 0.9 * width;
-var drawingBoardHeight = 0.6 * height;
+var drawingBoardWidth = 900;
+var drawingBoardHeight = 445;
 var originXvalue = Number((0.1 * drawingBoardWidth).toFixed(3));
 var originYvalue = Number((0.85 * drawingBoardHeight).toFixed(3));
 
