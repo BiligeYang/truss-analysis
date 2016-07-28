@@ -1740,5 +1740,168 @@ var engine = {
         });
       }
     },engine);
+  },
+  displacementTable:function(){
+    // get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    tbl.setAttribute("id","displacementTable");
+    // creating all cells
+    var head = tbl.createTHead();
+    var firstRow = document.createElement("tr");
+    var nodeNumberCell = document.createElement("th");
+    var displacementCell = document.createElement("th");
+    nodeNumberCell.appendChild(document.createTextNode("Node"));
+    displacementCell.appendChild(document.createTextNode("Displacement"));
+    firstRow.appendChild(nodeNumberCell);
+    firstRow.appendChild(displacementCell);
+    head.appendChild(firstRow);
+    for (var i = 0; i < numberOfNodes; i++) {
+      // creates a table row
+      var row = document.createElement("tr");
+      for (var j = 0; j < 2; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        var cellText;
+        var xDisp;
+        var yDisp;
+        if(j===0){
+          cellText = document.createTextNode(i+1);
+        } else{
+          if(displacement[2*i]===0){
+            xDisp = 0.00;
+          } else if(math.abs(displacement[2*i])<1e-4){
+            xDisp = displacement[2*i].toExponential(4);
+          } else {
+            xDisp = displacement[2*i].toPrecision(4);
+          }
+          if(displacement[2*i+1]===0){
+            yDisp = 0.00;
+          } else if(math.abs(displacement[2*i+1])<1e-4){
+            yDisp = displacement[2*i+1].toExponential(4);
+          } else {
+            yDisp = displacement[2*i+1].toPrecision(4);
+          }
+          cellText = document.createTextNode("("+ xDisp +","+ yDisp +")");
+        }
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+   
+      // add the row to the end of the table body
+      tblBody.appendChild(row);
+    }
+   
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+    // appends <table> into <body>
+    body.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+    tbl.setAttribute("border", "2");
+    tbl.style.zIndex = 3;
+    tbl.style.position = 'absolute';
+    tbl.style.left = "920px";
+    tbl.style.top = "230px";
+    tbl.style.width = "200px";
+    tbl.style.backgroundColor = "white";
+  },
+  eraseDisplacementTable:function(){
+    document.getElementsByTagName("body")[0].removeChild(document.getElementById("displacementTable"));
+  },
+  elementDisplay:function(){
+    this.getElements();
+    this.startAnalysis();
+    this.elementTable();
+    this.elements.forEach(function(member,index){//draw the square and member number
+      var firstNodeCoords = math.clone(this.nodes[member[0]]);
+      var lastNodeCoords = math.clone(this.nodes[member[1]]);
+      firstNodeCoords = [originXvalue + firstNodeCoords[0],originYvalue - firstNodeCoords[1]];//change truss coords to screen coords
+      lastNodeCoords =  [originXvalue + lastNodeCoords[0],originYvalue - lastNodeCoords[1]];
+      //var halfwayCoords = [(firstNodeCoords[0]+lastNodeCoords[0])/2,(firstNodeCoords[1]+lastNodeCoords[1])/2];
+      var oneThirdCoords = [firstNodeCoords[0]+(lastNodeCoords[0]-firstNodeCoords[0])*2/3-5,firstNodeCoords[1]+(lastNodeCoords[1]-firstNodeCoords[1])*2/3-5];
+      if((Number(index)+1).toString().length == 1){
+        this.elementNumberDisplay.push({
+          background: draw.rect(15,15).move(oneThirdCoords[0]-3,oneThirdCoords[1]).fill("#0CBEF0").stroke({color:'black',width:2}).front(),
+          number: draw.text((Number(index)+1).toString()).move(oneThirdCoords[0],oneThirdCoords[1]).font({size:15}).front()
+        });
+      } else {
+        this.elementNumberDisplay.push({
+          background: draw.rect(25,15).move(oneThirdCoords[0]-3,oneThirdCoords[1]).fill("#0CBEF0").stroke({color:'black',width:2}).front(),
+          number: draw.text((Number(index)+1).toString()).move(oneThirdCoords[0],oneThirdCoords[1]).font({size:15}).front()
+        });
+      }
+      
+    },engine);
+  },
+  elementTable: function(){
+     // get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    tbl.setAttribute("id","elementTable");
+    // creating all cells
+    var head = tbl.createTHead();
+    var firstRow = document.createElement("tr");
+    var elementNumberCell = document.createElement("th");
+    var nodeNumberCell = document.createElement("th");
+    var areaCell = document.createElement("th");
+    var eCell = document.createElement("th");
+    elementNumberCell.appendChild(document.createTextNode(" "));
+    nodeNumberCell.appendChild(document.createTextNode("Nodes"));
+    areaCell.appendChild(document.createTextNode("A"));
+    eCell.appendChild(document.createTextNode("E"));
+    firstRow.appendChild(elementNumberCell);
+    firstRow.appendChild(nodeNumberCell);
+    firstRow.appendChild(areaCell);
+    firstRow.appendChild(eCell);
+    head.appendChild(firstRow);
+    for (var i = 0; i < this.elements.length; i++) {
+      // creates a table row
+      var row = document.createElement("tr");
+      for (var j = 0; j < 4; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        var cellText;
+        var area;
+        var e;
+        if(j===0){
+          cellText = document.createTextNode(i+1);
+        } else if (j===1){
+          cellText = document.createTextNode(this.elements[i][0]+","+this.elements[i][1]);
+        } else if (j===2){
+          cellText = document.createTextNode(this.elements[i][2]);
+        } else {
+          cellText = document.createTextNode(this.elements[i][3]);
+        }
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+   
+      // add the row to the end of the table body
+      tblBody.appendChild(row);
+    }
+   
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+    // appends <table> into <body>
+    body.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+    tbl.setAttribute("border", "2");
+    tbl.style.zIndex = 3;
+    tbl.style.position = 'absolute';
+    tbl.style.left = "920px";
+    tbl.style.top = "230px";
+    tbl.style.width = "200px";
+    tbl.style.backgroundColor = "white";
+  },
+  eraseElementTable: function(){
+    
   }
 };
