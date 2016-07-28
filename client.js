@@ -750,7 +750,7 @@ var handlers = { //The methods here handles all direct interaction with the user
 
   //An eventListener to delete selected lines and associated dots
   deleteElement: function(event) {
-    if (event.type === "click" || event.keyCode === 46 || event.keyCode === 68 ||event.keyCode === 27) {
+    if (event.keyCode === 46 || event.keyCode === 68 ||event.keyCode === 27) {
       //delete selected lines
       jointPoints.links.forEach(function(entry) {
         if (entry.line.node.getAttribute('stroke-width') === '6') {
