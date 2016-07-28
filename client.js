@@ -1705,5 +1705,24 @@ var engine = {
       },engine);
       this.displacementLines = [];
     }
+  },
+  startAnalysis:function(){
+    this.compute();
+    var nodesKeys = Object.keys(this.nodes);
+    nodesKeys.forEach(function(key){
+      var nodeTrussCoord = this.nodes[key];
+      var nodeScreenCoord = [nodeTrussCoord[0]+originXvalue, originYvalue - nodeTrussCoord[1]];
+      if(key.toString().length == 1){//if it is a one digit number
+        this.nodeNumberDisplay.push({
+          background: draw.circle(20).move(nodeScreenCoord[0]+4.5,nodeScreenCoord[1]-22).fill("#F7F506").stroke({color:'black',width:2}).front(),
+          number: draw.text(key).move(nodeScreenCoord[0]+10,nodeScreenCoord[1]-20).font({size:15}).front()
+        });
+      } else {//else meaning the key is two digits
+        this.nodeNumberDisplay.push({
+          background: draw.ellipse(29,20).move(nodeScreenCoord[0]+4.5,nodeScreenCoord[1]-22).fill("#F7F506").stroke({color:'black',width:2}).front(),
+          number: draw.text(key).move(nodeScreenCoord[0]+10,nodeScreenCoord[1]-20).font({size:15}).front()
+        });
+      }
+    },engine);
   }
 };
