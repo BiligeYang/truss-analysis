@@ -447,6 +447,22 @@ var sync = {
         circleSelected = each;
       }
     });
+    if (circleSelectedCount === 1) {
+      document.getElementById("xCoordInput").value = (circleSelected.trussX/scaleRatio).toFixed(3);
+      document.getElementById("yCoordInput").value = (circleSelected.trussY/scaleRatio).toFixed(3);
+      document.getElementById("arrowheadNotice").innerHTML = "Now choose the direction of load:";
+      document.getElementById("supportNotice").innerHTML = "Choose the support type or no support(X):";
+    } else if (circleSelectedCount > 1) {
+      document.getElementById("arrowheadNotice").innerHTML = "You selected more than one joint";
+      document.getElementById("supportNotice").innerHTML = "You selected more than one joint";
+      document.getElementById("xCoordInput").value = '';
+      document.getElementById("yCoordInput").value = '';
+    } else {
+      document.getElementById("arrowheadNotice").innerHTML = "Select a joint to add load<br>Or click on a load to change it";
+      document.getElementById("supportNotice").innerHTML = "Select a joint to add support<br>Or click on a support to change it";
+      document.getElementById("xCoordInput").value = '';
+      document.getElementById("yCoordInput").value = '';
+    }
   },
   lineSelected: function(){
     lineSelected = [];
