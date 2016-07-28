@@ -80,14 +80,16 @@
       <button id="eAllButton" onclick="aeHandlers.addEAll()">Apply to All</button>
     </div>
     <div id="computingDiv">
-      <h3 style="color:white;">Analysis</h3>
-      <button id="forceButton" onclick="engine.forceDisplay()">Show Barforce</button>
-      <button id="stressButton" onclick="engine.stressDisplay()">Show Stress</button>
-      <button id="reactionButton" onclick="engine.reactionDisplay()">Show Reaction</button>
-      <button id="displacementButton" onclick="engine.displacementDisplay()">Show Displacement</button>
-      <button id="eraseButton" onclick="engine.eraseForceDisplay();engine.eraseStressDisplay();engine.eraseDisplacementDisplay();engine.eraseReactionDisplay()">Stop Displaying</button>
+      <h3 style="color:white;margin:5px;">Analysis</h3>
+      <button style="margin-left:3px;" id="forceButton" onclick="engine.forceDisplay()">Show Barforce</button>
+      <button style="margin-left:0px;" id="stressButton" onclick="engine.stressDisplay()">Show Stress</button>
+      <button style="margin-left:3px;" id="reactionButton" onclick="engine.reactionDisplay()">Show Reaction</button>
+      <button style="margin-left:0px;" id="displacementButton" onclick="engine.displacementDisplay()">Show Displacement</button>
+      <button style="margin-left:3px;" id="eraseButton" onclick="engine.eraseForceDisplay();engine.eraseStressDisplay();engine.eraseDisplacementDisplay();engine.eraseReactionDisplay()">Stop Displaying</button>
     </div>
 
+    
+    
     
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
