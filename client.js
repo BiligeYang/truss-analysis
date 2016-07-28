@@ -756,12 +756,7 @@ var handlers = { //The methods here handles all direct interaction with the user
         lineSelectedCount++;
       }
     });
-    if (lineSelectedCount > 0) {
-      document.getElementById("removeLineButton").disabled = false;
-    } else {
-      document.getElementById("removeLineButton").disabled = true;
-    }
-
+    
   },
 
   //An eventListener to delete selected lines and associated dots
