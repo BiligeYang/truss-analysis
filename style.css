@@ -45,6 +45,7 @@ p{
   position:absolute;
   top: 500px;
   left:2px;
+  width:100px;
   padding:5px;
   background-color:#8ED231;
   border:solid 2px #598B15;
@@ -63,7 +64,8 @@ p{
 #arrowheadDiv{
   position:absolute;
   top: 500px;
-  left:125px;
+  left:123px;
+  width:200px;
   background-color:#FFC300;
   padding:5px;
   border-radius:10px;
@@ -85,6 +87,7 @@ p{
   position:absolute;
   top: 500px;
   left:342px;
+  width:240px;
   background-color:#EE2070;
   padding:5px;
   border-radius:10px;
@@ -111,7 +114,8 @@ p{
 #aeDiv {
   position:absolute;
   top: 500px;
-  left:595px;
+  left:600px;
+  width:280px;
   background-color:#BB6916;
   padding:5px;
   border-radius:10px;
