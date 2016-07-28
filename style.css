@@ -6,13 +6,13 @@ h2{
 h3{
   margin-top:0;
   margin-bottom:2px;
-  margin-left:6px;
+  margin-left:3px;
 }
 
 p{
   margin-top:2px;
   margin-bottom:2px;
-  margin-left:6px;
+  margin-left:3px;
 }
 
 #drawing {
@@ -76,7 +76,7 @@ p{
   width:30px;
   border:solid 2px black;
   padding:5px;
-  margin:2px;
+  margin:0;
   border-radius:10px;
   background-color:yellow;
 }
@@ -84,7 +84,7 @@ p{
 #supportDiv {
   position:absolute;
   top: 500px;
-  left:358px;
+  left:350px;
   background-color:#EE2070;
   padding:5px;
   border-radius:10px;
@@ -96,7 +96,7 @@ p{
   width:30px;
   border:solid 2px black;
   padding:5px;
-  margin:1.5px;
+  margin:0;
   border-radius:10px;
   background-color:#20D5EE;
 }
@@ -111,7 +111,7 @@ p{
 #aeDiv {
   position:absolute;
   top: 500px;
-  left:630px;
+  left:612px;
   background-color:#BB6916;
   padding:5px;
   border-radius:10px;
@@ -128,8 +128,8 @@ p{
 #computingDiv{
   position:absolute;
   top: 80px;
-  left:920px;
-  width:250px;
+  left:910px;
+  width:215px;
   height:600px;
   background-color:#34495E;
   padding:5px;
