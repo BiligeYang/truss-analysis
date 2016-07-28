@@ -80,13 +80,16 @@
       <button id="eAllButton" style="padding-left:2px;padding-right:2px;" onclick="aeHandlers.addEAll()">Apply to All</button>
     </div>
     <div id="computingDiv">
-      <h3 style="color:white;margin:5px;">Analysis</h3>
-      <button onclick="engine.startAnalysis()" id="analysisStartButton">Start Analyzing</button>
-      <button style="margin-left:3px;padding:2px;" id="forceButton" onclick="engine.forceDisplay()">Show Barforce</button>
-      <button style="margin-left:0px;padding:2px;" id="stressButton" onclick="engine.stressDisplay()">Show Stress</button>
-      <button style="margin-left:3px;padding:2px;" id="reactionButton" onclick="engine.reactionDisplay()">Show Reaction</button>
-      <button style="margin-left:0px;padding:2px;" id="displacementButton" onclick="engine.displacementDisplay()">Displacement</button>
-      <button style="margin-left:3px;padding:2px;" id="eraseButton" onclick="engine.eraseForceDisplay();engine.eraseStressDisplay();engine.eraseDisplacementDisplay();engine.eraseReactionDisplay()">Stop Displaying</button>
+      <h3 style="color:white;margin:5px;"></h3>
+      <p style="color:white;font-family:sans-serif;margin:5px;">Input Data Display:</p>
+      <button style="margin-left:3px;">Joint Input</button>
+      <button>Member Properties</button>
+      <p style="color:white;font-family:sans-serif;margin:5px;">Results Display:</p>
+      <button style="margin-left:3px;" id="forceButton" onclick="engine.forceDisplay()">Show Barforce</button>
+      <button style="margin-left:0px;" id="stressButton" onclick="engine.stressDisplay()">Show Stress</button>
+      <button style="margin-left:3px;" id="reactionButton" onclick="engine.reactionDisplay()">Show Reaction</button>
+      <button style="margin-left:0px;" id="displacementButton" onclick="engine.displacementDisplay()">Displacement</button>
+      <button style="margin-left:3px;" id="eraseButton" onclick="engine.eraseForceDisplay();engine.eraseStressDisplay();engine.eraseDisplacementDisplay();engine.eraseReactionDisplay()">Stop Displaying</button>
     </div>
 
     
