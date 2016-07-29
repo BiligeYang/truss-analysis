@@ -1409,6 +1409,9 @@ var engine = {
     var localDisp = math.multiply(transMatrix,memberDisp).valueOf();
     var axialDisp = localDisp[2]-localDisp[0];
     var barForce = ((member[2]*member[3]/(memberLength/scaleRatio))*axialDisp).toPrecision(7);
+    if(math.abs(barForce)<1e-7){
+      barForce = 0;
+    }
     this.barForceArray.push(barForce);
     this.barStressArray.push((barForce/member[2]).toPrecision(7));
   },
@@ -1435,11 +1438,15 @@ var engine = {
     var barForce;
     var barColor;
     var tOrC;
-    var total = 0;
-    for (i = 0; i < this.barForceArray.length; i++) {
-      total += math.abs(this.barForceArray[i]);
-    }
-    var avgForce = total / this.barForceArray.length;
+    var nonZeroAbsForces = [];
+    this.barForceArray.forEach(function(force){
+      if(force !== 0){
+        nonZeroAbsForces.push(math.abs(force));
+      }
+    });
+    var minForce = Math.min.apply(null, nonZeroAbsForces);
+    var maxForce = Math.max.apply(null, nonZeroAbsForces);
+    var graphSlope = 25/(maxForce-minForce);
     this.elements.forEach(function(member,index){// create the display bars and the number on them
       var firstNodeCoords = math.clone(this.nodes[member[0]]);
       var lastNodeCoords = math.clone(this.nodes[member[1]]);
@@ -1459,10 +1466,8 @@ var engine = {
         tOrC = undefined;
       }
       //decide on the size of displayed bar
-      barSize = (barForce / avgForce - 1) * 5 + 12;
-      if (barSize > 40) {
-        barSize = 40;
-      } else if (barForce === 0) {
+      barSize = (math.abs(barForce)-minForce)*graphSlope + 5;
+      if (barForce === 0){
         barSize = 3;
       }
       //decide on the color of the bar based on tension or compression
@@ -1475,11 +1480,11 @@ var engine = {
       }
       var oneThirdCoords = [firstNodeCoords[0]+(lastNodeCoords[0]-firstNodeCoords[0])/3,firstNodeCoords[1]+(lastNodeCoords[1]-firstNodeCoords[1])/3];
      
-      var textCoords = [oneThirdCoords[0]-2*barSize*sin,oneThirdCoords[1]+1.6*barSize*cos];
+      var textCoords = [oneThirdCoords[0]-(barSize+15)*sin,oneThirdCoords[1]+(barSize+15)*cos];
       textCoords = [originXvalue + textCoords[0],originYvalue - textCoords[1]];
       if (barForce !== 0){
         this.displayNumbers.push({
-          number: draw.text(this.barForceArray[index].toString()).move(textCoords[0],textCoords[1]).font({size:10}).rotate(-angle,textCoords[0],textCoords[1])
+          number: draw.text(this.barForceArray[index].toString()).move(textCoords[0],textCoords[1]).font({size:15}).rotate(-angle,textCoords[0],textCoords[1])
         });
       }
       
@@ -1585,11 +1590,15 @@ var engine = {
     var barStress;
     var barColor;
     var tOrC;
-    var total = 0;
-    for (i = 0; i < this.barStressArray.length; i++) {
-      total += math.abs(this.barStressArray[i]);
-    }
-    var avgStress = total / this.barStressArray.length;
+    var nonZeroAbsStresses = [];
+    this.barStressArray.forEach(function(stress){
+      if(stress !== 0){
+        nonZeroAbsStresses.push(math.abs(stress));
+      }
+    });
+    var minStress = Math.min.apply(null, nonZeroAbsStresses);
+    var maxStress = Math.max.apply(null, nonZeroAbsStresses);
+    var graphSlope = 25/(maxStress-minStress);
     this.elements.forEach(function(member,index){// create the display bars and the number on them
       var firstNodeCoords = math.clone(this.nodes[member[0]]);
       var lastNodeCoords = math.clone(this.nodes[member[1]]);
@@ -1609,10 +1618,8 @@ var engine = {
         tOrC = undefined;
       }
       //decide on the size of displayed bar
-      barSize = (barStress / avgStress - 1) * 5 + 12;
-      if (barSize > 40) {
-        barSize = 40;
-      } else if (barStress === 0) {
+      barSize = (math.abs(barStress)-minStress)*graphSlope + 5;
+      if (barStress === 0){
         barSize = 3;
       }
       //decide on the color of the bar based on tension or compression
@@ -1624,12 +1631,11 @@ var engine = {
         barColor = "black";
       }
       var oneThirdCoords = [firstNodeCoords[0]+(lastNodeCoords[0]-firstNodeCoords[0])/3,firstNodeCoords[1]+(lastNodeCoords[1]-firstNodeCoords[1])/3];
-     
-      var textCoords = [oneThirdCoords[0]-2*barSize*sin,oneThirdCoords[1]+1.6*barSize*cos];
+      var textCoords = [oneThirdCoords[0]-(barSize+15)*sin,oneThirdCoords[1]+(barSize+15)*cos];
       textCoords = [originXvalue + textCoords[0],originYvalue - textCoords[1]];
       if (barStress !== 0){
         this.displayNumbers.push({
-          number: draw.text(this.barStressArray[index].toString()).move(textCoords[0],textCoords[1]).font({size:10}).rotate(-angle,textCoords[0],textCoords[1])
+          number: draw.text(this.barStressArray[index].toString()).move(textCoords[0],textCoords[1]).font({size:15}).rotate(-angle,textCoords[0],textCoords[1])
         });
       }
       
@@ -1806,26 +1812,30 @@ var engine = {
     this.newNodes = {};
     displacementLines = [];
     var nodesKeys = Object.keys(this.nodes);
-    var total = 0;
-    var length = 0;
-    for (i = 0; i < displacement.length; i++) {
-      if(displacement[i] !== 0){
-        total += math.abs(displacement[i]);
-        length++;
+    
+    //
+    var nonZeroAbsDisplacements = [];
+    displacement.forEach(function(each){
+      if(each !== 0){
+        nonZeroAbsDisplacements.push(math.abs(each));
       }
-    }
-    var avgDisplacement = total / length;
+    });
+    var minDisplacement = Math.min.apply(null, nonZeroAbsDisplacements);
+    var maxDisplacement = Math.max.apply(null, nonZeroAbsDisplacements);
+    var graphSlope = 35/(maxDisplacement-minDisplacement);
+    //
     nodesKeys.forEach(function(key){//get the displaced new node coords(exaggerated)
       key = Number(key);
       var amplifiedDisplacementX;
       var amplifiedDisplacementY;
-      amplifiedDisplacementX = (math.abs(displacement[2*key-2])/ avgDisplacement - 1) * 20 + 20;
-      amplifiedDisplacementY = (math.abs(displacement[2*key-1])/ avgDisplacement - 1) * 20 + 20;
-      if (amplifiedDisplacementX > 80) {
-        amplifiedDisplacementX = 80;
+      amplifiedDisplacementX = (math.abs(displacement[2*key-2])-minDisplacement)*graphSlope+5;
+      amplifiedDisplacementY = (math.abs(displacement[2*key-1])-minDisplacement)*graphSlope+5;
+      
+      if (displacement[2*key-2] === 0){// make sure 0 displacement means 0
+        amplifiedDisplacementX = 0;
       }
-      if (amplifiedDisplacementY > 80) {
-        amplifiedDisplacementY = 80;
+      if (displacement[2*key-1] === 0){// make sure 0 displacement means 0
+        amplifiedDisplacementY = 0;
       }
       if (displacement[2*key-2] < 0){//make sure the negativity of displacement is represented
         amplifiedDisplacementX = - amplifiedDisplacementX;
