@@ -448,8 +448,6 @@ var sync = {
       }
     });
     if (circleSelectedCount === 1) {
-      document.getElementById("xCoordInput").value = (circleSelected.trussX/scaleRatio).toFixed(3);
-      document.getElementById("yCoordInput").value = (circleSelected.trussY/scaleRatio).toFixed(3);
       document.getElementById("arrowheadNotice").innerHTML = "Now choose the direction of load:";
       document.getElementById("supportNotice").innerHTML = "Choose the support type or no support(X):";
     } else if (circleSelectedCount > 1) {
