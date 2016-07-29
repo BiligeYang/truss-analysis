@@ -1,5 +1,10 @@
 /*jshint maxerr: 1000 */
 // Get the browser's window's height and width
+
+//prevent backspace from exiting the window
+window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+0008'||e.keyIdentifier=='Backspace'){if(e.target==document.body){e.preventDefault();}}},true);
+
+
 var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 var drawingBoardWidth = 900;
