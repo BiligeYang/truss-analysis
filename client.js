@@ -1427,10 +1427,11 @@ var engine = {
       this.transform(member);
     },engine);
   },
+  
   forceDisplay: function(){
-    this.eraseStressDisplay();
-    this.eraseDisplacementDisplay();
+    this.stopDisplaying();
     this.compute();
+    //nodes and elements will be shown, their functions are at the end of this program since they should show on top
     var barForce;
     var barColor;
     var tOrC;
@@ -1494,6 +1495,8 @@ var engine = {
         });
       }
     },engine);
+    this.nodeDisplay();
+    this.elementDisplay();
   },
   eraseForceDisplay: function(){
     if (this.displayBars.length !== 0){
@@ -1509,10 +1512,76 @@ var engine = {
       this.displayNumbers = [];
     }
   },
+  forceTable:function(){
+    this.eraseForceTable();
+     // get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    tbl.setAttribute("id","forceTable");
+    // creating all cells
+    var head = tbl.createTHead();
+    var firstRow = document.createElement("tr");
+    var elementNumberCell = document.createElement("th");
+    var nodeNumberCell = document.createElement("th");
+    var forceCell = document.createElement("th");
+    elementNumberCell.appendChild(document.createTextNode(" "));
+    nodeNumberCell.appendChild(document.createTextNode("Nodes"));
+    forceCell.appendChild(document.createTextNode("Bar Force"));
+    firstRow.appendChild(elementNumberCell);
+    firstRow.appendChild(nodeNumberCell);
+    firstRow.appendChild(forceCell);
+    head.appendChild(firstRow);
+    for (var i = 0; i < this.elements.length; i++) {
+      // creates a table row
+      var row = document.createElement("tr");
+      for (var j = 0; j < 3; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        var cellText;
+        var force;
+        if(j===0){
+          cellText = document.createTextNode(i+1);
+        } else if (j===1){
+          cellText = document.createTextNode(this.elements[i][0]+", "+this.elements[i][1]);
+          cell.style.textAlign = "center";
+        } else {
+          cellText = document.createTextNode(this.barForceArray[i]);
+        }
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+   
+      // add the row to the end of the table body
+      tblBody.appendChild(row);
+    }
+   
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+    // appends <table> into <body>
+    body.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+    tbl.setAttribute("border", "2");
+    tbl.style.zIndex = 3;
+    tbl.style.position = 'absolute';
+    tbl.style.left = "920px";
+    tbl.style.top = "230px";
+    tbl.style.width = "200px";
+    tbl.style.backgroundColor = "white";
+  },
+  eraseForceTable:function(){
+    if(document.getElementById("forceTable") !== null){
+      document.getElementsByTagName("body")[0].removeChild(document.getElementById("forceTable"));
+    } 
+  },
+  
   stressDisplay: function(){
-    this.eraseForceDisplay();
-    this.eraseDisplacementDisplay();
+    this.stopDisplaying();
     this.compute();
+    //nodes and elements will be shown, their functions are at the end of this program since they should show on top
     var barStress;
     var barColor;
     var tOrC;
@@ -1576,6 +1645,8 @@ var engine = {
         });
       }
     },engine);
+    this.nodeDisplay();
+    this.elementDisplay();
   },
   eraseStressDisplay: function(){
     if (this.displayBars.length !== 0){
@@ -1591,6 +1662,72 @@ var engine = {
       this.displayNumbers = [];
     }
   },
+  stressTable:function(){
+    this.eraseStressTable();
+     // get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    tbl.setAttribute("id","stressTable");
+    // creating all cells
+    var head = tbl.createTHead();
+    var firstRow = document.createElement("tr");
+    var elementNumberCell = document.createElement("th");
+    var nodeNumberCell = document.createElement("th");
+    var stressCell = document.createElement("th");
+    elementNumberCell.appendChild(document.createTextNode(" "));
+    nodeNumberCell.appendChild(document.createTextNode("Nodes"));
+    stressCell.appendChild(document.createTextNode("Bar Stress"));
+    firstRow.appendChild(elementNumberCell);
+    firstRow.appendChild(nodeNumberCell);
+    firstRow.appendChild(stressCell);
+    head.appendChild(firstRow);
+    for (var i = 0; i < this.elements.length; i++) {
+      // creates a table row
+      var row = document.createElement("tr");
+      for (var j = 0; j < 3; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        var cellText;
+        var stress;
+        if(j===0){
+          cellText = document.createTextNode(i+1);
+        } else if (j===1){
+          cellText = document.createTextNode(this.elements[i][0]+", "+this.elements[i][1]);
+          cell.style.textAlign = "center";
+        } else {
+          cellText = document.createTextNode(this.barStressArray[i]);
+        }
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+   
+      // add the row to the end of the table body
+      tblBody.appendChild(row);
+    }
+   
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+    // appends <table> into <body>
+    body.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+    tbl.setAttribute("border", "2");
+    tbl.style.zIndex = 3;
+    tbl.style.position = 'absolute';
+    tbl.style.left = "920px";
+    tbl.style.top = "230px";
+    tbl.style.width = "200px";
+    tbl.style.backgroundColor = "white";
+  },
+  eraseStressTable:function(){
+    if(document.getElementById("stressTable") !== null){
+      document.getElementsByTagName("body")[0].removeChild(document.getElementById("stressTable"));
+    } 
+  },
+  
   reactionDisplay:function(){
     var reactionArray = math.subtract(jointForce,engine.loadVector).valueOf();
     var totalReaction = 0;
@@ -1660,13 +1797,12 @@ var engine = {
       this.reactionArrows=[];
     }
   },
+  
   displacementDisplay:function(){
-    this.eraseDisplacementDisplay();
-    this.eraseForceDisplay();
-    this.eraseStressDisplay();
-    this.eraseReactionDisplay();
-    this.eraseElementDisplay();
+    this.stopDisplaying();
     engine.compute();
+    this.nodeDisplay();
+    this.displacementTable();
     this.newNodes = {};
     displacementLines = [];
     var nodesKeys = Object.keys(this.nodes);
@@ -1709,8 +1845,6 @@ var engine = {
         line: draw.line(firstNode[0],firstNode[1],lastNode[0],lastNode[1]).stroke({width:1 , color:"#5A8ED4"}).front()
         });
     },engine);
-    this.nodeDisplay();
-    this.displacementTable();
   },
   eraseDisplacementDisplay: function(){
     if (this.displacementLines.length !== 0){
@@ -1719,98 +1853,6 @@ var engine = {
         each.line.remove();
       },engine);
       this.displacementLines = [];
-    }
-  },
-  nodeTable:function(){
-    this.eraseNodeTable();
-    // get the reference for the body
-    var body = document.getElementsByTagName("body")[0];
-    // creates a <table> element and a <tbody> element
-    var tbl     = document.createElement("table");
-    var tblBody = document.createElement("tbody");
-    tbl.setAttribute("id","nodeTable");
-    // creating all cells
-    var head = tbl.createTHead();
-    var firstRow = document.createElement("tr");
-    var nodeNumberCell = document.createElement("th");
-    var coordsCell = document.createElement("th");
-    nodeNumberCell.appendChild(document.createTextNode("Node"));
-    coordsCell.appendChild(document.createTextNode("Coordinates"));
-    firstRow.appendChild(nodeNumberCell);
-    firstRow.appendChild(coordsCell);
-    head.appendChild(firstRow);
-    for (var i = 0; i < numberOfNodes; i++) {
-      // creates a table row
-      var row = document.createElement("tr");
-      for (var j = 0; j < 2; j++) {
-        // Create a <td> element and a text node, make the text
-        // node the contents of the <td>, and put the <td> at
-        // the end of the table row
-        var cell = document.createElement("td");
-        var cellText;
-        var xCoord = (this.nodes[i+1][0]/scaleRatio).toFixed(3);
-        var yCoord = this.nodes[i+1][1]/scaleRatio.toFixed(3);
-        if(j===0){
-          cellText = document.createTextNode(i+1);
-        } else{
-          cellText = document.createTextNode("("+ xCoord +","+ yCoord +")");
-        }
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-      }
-   
-      // add the row to the end of the table body
-      tblBody.appendChild(row);
-    }
-   
-    // put the <tbody> in the <table>
-    tbl.appendChild(tblBody);
-    // appends <table> into <body>
-    body.appendChild(tbl);
-    // sets the border attribute of tbl to 2;
-    tbl.setAttribute("border", "2");
-    tbl.style.zIndex = 3;
-    tbl.style.position = 'absolute';
-    tbl.style.left = "920px";
-    tbl.style.top = "230px";
-    tbl.style.width = "200px";
-    tbl.style.backgroundColor = "white";
-  },
-  eraseNodeTable:function(){
-    if(document.getElementById("nodeTable") !== null){
-      document.getElementsByTagName("body")[0].removeChild(document.getElementById("nodeTable"));
-    }
-  },
-  nodeDisplay:function(){
-    this.eraseNodeDisplay();
-    this.getNodes();
-    this.eraseElementTable();
-    var nodesKeys = Object.keys(this.nodes);
-    nodesKeys.forEach(function(key){
-      var nodeTrussCoord = this.nodes[key];
-      var nodeScreenCoord = [nodeTrussCoord[0]+originXvalue, originYvalue - nodeTrussCoord[1]];
-      if(key.toString().length == 1){//if it is a one digit number
-        this.nodeNumberDisplay.push({
-          background: draw.circle(20).move(nodeScreenCoord[0]+4.5,nodeScreenCoord[1]-22).fill("#F7F506").stroke({color:'black',width:2}).front(),
-          number: draw.text(key).move(nodeScreenCoord[0]+10,nodeScreenCoord[1]-20).font({size:15}).front()
-        });
-      } else {//else meaning the key is two digits
-        this.nodeNumberDisplay.push({
-          background: draw.ellipse(29,20).move(nodeScreenCoord[0]+4.5,nodeScreenCoord[1]-22).fill("#F7F506").stroke({color:'black',width:2}).front(),
-          number: draw.text(key).move(nodeScreenCoord[0]+10,nodeScreenCoord[1]-20).font({size:15}).front()
-        });
-      }
-    },engine);
-  },
-  eraseNodeDisplay: function(){
-    if (this.nodeNumberDisplay.length!== 0){
-      this.nodeNumberDisplay.forEach(function(each){
-        each.background.hide();
-        each.background.remove();
-        each.number.hide();
-        each.number.remove();
-      });
-      this.nodeNumberDisplay = [];
     }
   },
   displacementTable:function(){
@@ -1883,16 +1925,109 @@ var engine = {
     tbl.style.backgroundColor = "white";
   },
   eraseDisplacementTable:function(){
-    if(document.getElementById("displacementTable" !== null)){
+    if(document.getElementById("displacementTable") !== null){
       document.getElementsByTagName("body")[0].removeChild(document.getElementById("displacementTable"));
     }
   },
+  
+  nodeDisplay:function(){
+    this.eraseNodeDisplay();
+    this.getNodes();
+    this.eraseElementTable();
+    var nodesKeys = Object.keys(this.nodes);
+    nodesKeys.forEach(function(key){
+      var nodeTrussCoord = this.nodes[key];
+      var nodeScreenCoord = [nodeTrussCoord[0]+originXvalue, originYvalue - nodeTrussCoord[1]];
+      if(key.toString().length == 1){//if it is a one digit number
+        this.nodeNumberDisplay.push({
+          background: draw.circle(20).move(nodeScreenCoord[0]+4.5,nodeScreenCoord[1]-22).fill("#F7F506").stroke({color:'black',width:2}).front(),
+          number: draw.text(key).move(nodeScreenCoord[0]+10,nodeScreenCoord[1]-20).font({size:15}).front()
+        });
+      } else {//else meaning the key is two digits
+        this.nodeNumberDisplay.push({
+          background: draw.ellipse(29,20).move(nodeScreenCoord[0]+4.5,nodeScreenCoord[1]-22).fill("#F7F506").stroke({color:'black',width:2}).front(),
+          number: draw.text(key).move(nodeScreenCoord[0]+10,nodeScreenCoord[1]-20).font({size:15}).front()
+        });
+      }
+    },engine);
+  },
+  eraseNodeDisplay: function(){
+    if (this.nodeNumberDisplay.length!== 0){
+      this.nodeNumberDisplay.forEach(function(each){
+        each.background.hide();
+        each.background.remove();
+        each.number.hide();
+        each.number.remove();
+      });
+      this.nodeNumberDisplay = [];
+    }
+  },
+  nodeTable:function(){
+    this.eraseNodeTable();
+    // get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    tbl.setAttribute("id","nodeTable");
+    // creating all cells
+    var head = tbl.createTHead();
+    var firstRow = document.createElement("tr");
+    var nodeNumberCell = document.createElement("th");
+    var coordsCell = document.createElement("th");
+    nodeNumberCell.appendChild(document.createTextNode("Node"));
+    coordsCell.appendChild(document.createTextNode("Coordinates"));
+    firstRow.appendChild(nodeNumberCell);
+    firstRow.appendChild(coordsCell);
+    head.appendChild(firstRow);
+    for (var i = 0; i < numberOfNodes; i++) {
+      // creates a table row
+      var row = document.createElement("tr");
+      for (var j = 0; j < 2; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        var cellText;
+        var xCoord = (this.nodes[i+1][0]/scaleRatio).toFixed(3);
+        var yCoord = this.nodes[i+1][1]/scaleRatio.toFixed(3);
+        if(j===0){
+          cellText = document.createTextNode(i+1);
+        } else{
+          cellText = document.createTextNode("("+ xCoord +","+ yCoord +")");
+        }
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+   
+      // add the row to the end of the table body
+      tblBody.appendChild(row);
+    }
+   
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+    // appends <table> into <body>
+    body.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+    tbl.setAttribute("border", "2");
+    tbl.style.zIndex = 3;
+    tbl.style.position = 'absolute';
+    tbl.style.left = "920px";
+    tbl.style.top = "230px";
+    tbl.style.width = "200px";
+    tbl.style.backgroundColor = "white";
+  },
+  eraseNodeTable:function(){
+    if(document.getElementById("nodeTable") !== null){
+      document.getElementsByTagName("body")[0].removeChild(document.getElementById("nodeTable"));
+    }
+  },
+  
   elementDisplay:function(){
     this.eraseElementDisplay();
     this.getElements();
     this.nodeDisplay();
     this.eraseNodeTable();
-    this.elementTable();
     this.elements.forEach(function(member,index){//draw the square and member number
       var firstNodeCoords = math.clone(this.nodes[member[0]]);
       var lastNodeCoords = math.clone(this.nodes[member[1]]);
@@ -1963,7 +2098,8 @@ var engine = {
         if(j===0){
           cellText = document.createTextNode(i+1);
         } else if (j===1){
-          cellText = document.createTextNode(this.elements[i][0]+","+this.elements[i][1]);
+          cellText = document.createTextNode(this.elements[i][0]+", "+this.elements[i][1]);
+          cell.style.textAlign = "center";
         } else if (j===2){
           cellText = document.createTextNode(this.elements[i][2]);
         } else {
@@ -1995,16 +2131,19 @@ var engine = {
       document.getElementsByTagName("body")[0].removeChild(document.getElementById("elementTable"));
     } 
   },
+  
   stopDisplaying: function(){
     this.eraseNodeDisplay();
     this.eraseNodeTable();
     this.eraseElementDisplay();
     this.eraseElementTable();
     this.eraseForceDisplay();
+    this.eraseForceTable();
     this.eraseStressDisplay();
+    this.eraseStressTable();
+    this.eraseReactionDisplay();
     this.eraseDisplacementDisplay();
     this.eraseDisplacementTable();
-    this.eraseReactionDisplay();
   }
 };
 
@@ -2055,16 +2194,19 @@ var analysisButtonHandlers = {
   },
   element: function(){
     engine.elementDisplay();
+    engine.elementTable();
     displaySync.startElement();
     displaySync.stopNode();
   },
   force: function(){
     engine.forceDisplay();
+    engine.forceTable();
     displaySync.stopNode();
     displaySync.stopElement();
   },
   stress: function(){
     engine.stressDisplay();
+    engine.stressTable();
     displaySync.stopNode();
     displaySync.stopElement();
   },
