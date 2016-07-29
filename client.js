@@ -1661,9 +1661,11 @@ var engine = {
     }
   },
   displacementDisplay:function(){
+    this.eraseDisplacementDisplay();
     this.eraseForceDisplay();
     this.eraseStressDisplay();
     this.eraseReactionDisplay();
+    this.eraseElementDisplay();
     engine.compute();
     this.newNodes = {};
     displacementLines = [];
@@ -1720,6 +1722,7 @@ var engine = {
     }
   },
   nodeTable:function(){
+    this.eraseNodeTable();
     // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
     // creates a <table> element and a <tbody> element
@@ -1745,8 +1748,8 @@ var engine = {
         // the end of the table row
         var cell = document.createElement("td");
         var cellText;
-        var xCoord = this.nodes[i+1][0];
-        var yCoord = this.nodes[i+1][1];
+        var xCoord = (this.nodes[i+1][0]/scaleRatio).toFixed(3);
+        var yCoord = this.nodes[i+1][1]/scaleRatio.toFixed(3);
         if(j===0){
           cellText = document.createTextNode(i+1);
         } else{
@@ -1779,6 +1782,7 @@ var engine = {
     }
   },
   nodeDisplay:function(){
+    this.eraseNodeDisplay();
     this.getNodes();
     this.eraseElementTable();
     var nodesKeys = Object.keys(this.nodes);
@@ -1810,6 +1814,7 @@ var engine = {
     }
   },
   displacementTable:function(){
+    this.eraseDisplacementTable();
     // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
     // creates a <table> element and a <tbody> element
@@ -1883,9 +1888,11 @@ var engine = {
     }
   },
   elementDisplay:function(){
+    this.eraseElementDisplay();
     this.getElements();
     this.nodeDisplay();
     this.eraseNodeTable();
+    this.elementTable();
     this.elements.forEach(function(member,index){//draw the square and member number
       var firstNodeCoords = math.clone(this.nodes[member[0]]);
       var lastNodeCoords = math.clone(this.nodes[member[1]]);
@@ -1919,6 +1926,7 @@ var engine = {
     }
   },
   elementTable: function(){
+    this.eraseElementTable();
      // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
     // creates a <table> element and a <tbody> element
@@ -1999,40 +2007,80 @@ var engine = {
     this.eraseReactionDisplay();
   }
 };
-function generate_table() {
-  // get the reference for the body
-  var body = document.getElementsByTagName("body")[0];
-  // creates a <table> element and a <tbody> element
-  var tbl     = document.createElement("table");
-  var tblBody = document.createElement("tbody");
-  // creating all cells
-  for (var i = 0; i < numberOfNodes; i++) {
-    // creates a table row
-    var row = document.createElement("tr");
-    for (var j = 0; j < 2; j++) {
-      // Create a <td> element and a text node, make the text
-      // node the contents of the <td>, and put the <td> at
-      // the end of the table row
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode("("+displacement[2*i-2]+","+displacement[2*i-1]+")");
-      cell.appendChild(cellText);
-      row.appendChild(cell);
+
+
+displaySync = {
+  node: function(){
+    engine.nodeDisplay();
+    engine.nodeTable();
+  },
+  startNode: function(){
+    if(nodeSyncInterval === false){
+      nodeSyncInterval = window.setInterval(displaySync.node,500);
     }
- 
-    // add the row to the end of the table body
-    tblBody.appendChild(row);
+  },
+  stopNode: function(){
+    if(nodeSyncInterval !== false){
+      clearInterval(nodeSyncInterval);
+      nodeSyncInterval = false;
+      engine.eraseNodeTable();
+    }
+  },
+  element: function(){
+    engine.elementDisplay();
+    engine.elementTable();
+  },
+  startElement:function(){
+    if(elementSyncInterval === false){
+      elementSyncInterval =  window.setInterval(displaySync.element,500);
+    }
+  },
+  stopElement: function(){
+    if(elementSyncInterval !== false){
+      clearInterval(elementSyncInterval);
+      elementSyncInterval = false;
+      engine.eraseElementTable();
+    }
   }
- 
-  // put the <tbody> in the <table>
-  tbl.appendChild(tblBody);
-  // appends <table> into <body>
-  body.appendChild(tbl);
-  // sets the border attribute of tbl to 2;
-  tbl.setAttribute("border", "2");
-  tbl.style.zIndex = 3;
-  tbl.style.position = 'absolute';
-  tbl.style.left = "920px";
-  tbl.style.top = "230px";
-  tbl.style.width = "200px";
-  tbl.style.backgroundColor = "white";
-}
+};
+var nodeSyncInterval = window.setInterval(displaySync.node,500);
+var elementSyncInterval = false;
+
+var analysisButtonHandlers = {
+  node: function(){
+    engine.nodeDisplay();
+    engine.nodeTable();
+    displaySync.startNode();
+    displaySync.stopElement();
+  },
+  element: function(){
+    engine.elementDisplay();
+    displaySync.startElement();
+    displaySync.stopNode();
+  },
+  force: function(){
+    engine.forceDisplay();
+    displaySync.stopNode();
+    displaySync.stopElement();
+  },
+  stress: function(){
+    engine.stressDisplay();
+    displaySync.stopNode();
+    displaySync.stopElement();
+  },
+  reaction: function(){
+    engine.reactionDisplay();
+    displaySync.stopNode();
+    displaySync.stopElement();
+  },
+  displacement: function(){
+    engine.displacementDisplay();
+    displaySync.stopNode();
+    displaySync.stopElement();
+  },
+  stopDisplaying: function(){
+    engine.stopDisplaying();
+    displaySync.stopNode();
+    displaySync.stopElement();
+  }
+};
