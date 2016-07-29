@@ -1699,7 +1699,7 @@ var engine = {
       } 
       this.newNodes[key] = addArray(this.nodes[key],[amplifiedDisplacementX,amplifiedDisplacementY]);//this is truss coords
     },engine);
-    this.oneThirdCoords.forEach(function(element){//draw the new truss with new coords
+    this.elements.forEach(function(element){//draw the new truss with new coords
       var firstNode = this.newNodes[element[0]];
       var lastNode = this.newNodes[element[1]];
       //convert truss coords into svg coords
