@@ -145,3 +145,14 @@ p{
 .displayButton{
   padding:2px;
 }
+
+#saveAndOpen{
+  position:absolute;
+  top:620px;
+  left:600px;
+  background-color:#2C75BE;
+  padding:5px;
+  border-radius:5px;
+  margin:5px;
+}
+
