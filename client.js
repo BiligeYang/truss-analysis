@@ -2241,3 +2241,57 @@ var analysisButtonHandlers = {
     displaySync.stopElement();
   }
 };
+
+//saving and loading files
+
+var content;
+
+function saveFile(content){
+  var file = new File([content], "truss-data.txt", {type: "text/plain;charset=utf-8"});
+  saveAs(file);
+}
+
+
+var saveAndOpen = {
+  save:function(){
+    //points
+    content = "var points = [";
+    jointPoints.points.forEach(function(point){
+      content = content.concat(point.xValue,",",point.yValue,",");
+    });
+    content = content.slice(0,-1);
+    content = content.concat("]; ");
+    //hide hidden lines
+    content = content.concat("var hiddenLines = [");
+    jointPoints.links.forEach(function(link,index,array){
+      if(link.line.visible()===false){
+        content = content.concat(Number(index),",");
+      }
+    });
+    if (content.slice(-1) == ","){
+      content = content.slice(0,-1);
+    }
+    content = content.concat("]; ");
+    //set dependency
+    content = content.concat("var setArray = [");
+    content = content.concat(dependency.toString());
+    content = content.concat("]; ");
+    //scale unit and ratio
+    content = content.concat("scaleRatio = "+scaleRatio.toString()+"; ");
+    //get load
+    content = content.concat("var loadArray = {");
+    jointPoints.points.forEach(function(each,index){
+      if (each.load.every(isZero) === false) {
+         content = content.concat(index+":"+"["+each.load.toString()+"],");
+      }
+    });
+    if (content.slice(-1) == ","){
+      content = content.slice(0,-1);
+    }
+    content = content.concat("}; ");
+    //get Support
+    
+    
+    saveFile(content);
+  }
+};
