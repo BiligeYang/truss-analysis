@@ -1216,6 +1216,7 @@ var engine = {
         if (repeatCount ===0){
           this.nodes[numberOfNodes+1] = [point.trussX, point.trussY];
         }
+      }
     }, engine);
     var nodesKeys = Object.keys(this.nodes);
     numberOfNodes = nodesKeys.length;
