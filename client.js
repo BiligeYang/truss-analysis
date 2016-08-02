@@ -323,9 +323,9 @@ var sync = {
     scaleSelectedIndex =  scaleSelection.selectedIndex;
     scaleUnit = scaleSelection.options[scaleSelectedIndex].value;
     scaleRatio = 25/scaleValue;
-    if (scaleUnit ==="ft"){
-      forceUnit = "kip";
-      stressUnit = "ksi";
+    if (scaleUnit ==="in"){
+      forceUnit = "lb";
+      stressUnit = "psi";
     } else if (scaleUnit ==="m"){
       forceUnit = "N";
       stressUnit === "Pa";
