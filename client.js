@@ -402,42 +402,31 @@ var sync = {
       }
     });
 
-    var total = 0;
-    for (i = 0; i < allLoadArray.length; i++) {
-      total += allLoadArray[i];
-    }
-    var avgLoad = total / allLoadArray.length;
-
-    //var maxLoad = Math.max.apply(null,allLoadArray);
+    var maxLoad = Math.max.apply(null,allLoadArray);
     var minLoad = Math.min.apply(null, allLoadArray);
-    //var slope = (maxLoad-minLoad)/80;
+    var graphSlope = 50/(maxLoad - minLoad); 
     var loadSize;
     jointPoints.points.forEach(function(point) {
       if (point.load.every(isZero) === false) {
         point.load.forEach(function(oneLoad, index) {
           if (isZero(oneLoad) === false) {
             if (allLoadArray.length > 1) {
-              loadSize = (oneLoad / avgLoad - 1) * 20 + 40;
-              if (loadSize > 100) {
-                loadSize = 100;
-              } else if (loadSize < 20) {
-                loadSize = 20;
-              }
+              loadSize = (oneLoad - minLoad)* graphSlope + 30;
             } else {
-              loadSize = 50;
+              loadSize = 80;
             }
             if (index === 0) {
               point.loadToRight.size(loadSize, loadSize);
-              point.loadRightVD.text(oneLoad.toString() + ' lb'); //update the text that displays load
+              point.loadRightVD.text(oneLoad.toString() +" "+ document.getElementById("loadUnitSelect").value); //update the text that displays load
             } else if (index === 1) {
               point.loadToLeft.size(loadSize, loadSize);
-              point.loadLeftVD.text(oneLoad.toString() + ' lb');
+              point.loadLeftVD.text(oneLoad.toString() + " "+ document.getElementById("loadUnitSelect").value);
             } else if (index === 2) {
               point.loadToTop.size(loadSize, loadSize);
-              point.loadTopVD.text(oneLoad.toString() + ' lb');
+              point.loadTopVD.text(oneLoad.toString() + " "+ document.getElementById("loadUnitSelect").value);
             } else if (index === 3) {
               point.loadToBottom.size(loadSize, loadSize);
-              point.loadBottomVD.text(oneLoad.toString() + ' lb');
+              point.loadBottomVD.text(oneLoad.toString() + " "+ document.getElementById("loadUnitSelect").value);
             }
           }
         });
