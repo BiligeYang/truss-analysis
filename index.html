@@ -13,7 +13,7 @@
       <div id="scaleDiv">
         <input type="number" id="scaleInput">
         <select id="scaleSelect">
-          <option value="ft">ft</option>
+          <option value="in">in</option>
           <option value="m">m</option>
         </select>
       </div>
@@ -30,10 +30,10 @@
     <div id="arrowheadDiv">
       <h3>Load</h3>
       <p id="arrowheadNotice">Select a joint to add load<br>Or click on a load to change it</p>
-      <img class="arrowhead" id="arrowToRight" onclick="loadHandlers.arrowheadChangeColor(this)" src="black-arrow-right.svg"/>
-      <img class="arrowhead" id="arrowToLeft" onclick="loadHandlers.arrowheadChangeColor(this)" src="black-arrow-left.svg"/>
-      <img class="arrowhead" id="arrowToTop" onclick="loadHandlers.arrowheadChangeColor(this)" src="black-arrow-up.svg"/>
-      <img class="arrowhead" id="arrowToBottom" onclick="loadHandlers.arrowheadChangeColor(this)" src="black-arrow-down.svg"/>
+      <img class="arrowhead" id="arrowToRight" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-pointing-to-right.svg"/>
+      <img class="arrowhead" id="arrowToLeft" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-pointing-to-left.svg"/>
+      <img class="arrowhead" id="arrowToTop" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-pointing-to-up.svg"/>
+      <img class="arrowhead" id="arrowToBottom" onclick="loadHandlers.arrowheadChangeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Farrow-pointing-to-down.svg"/>
       <br>
       <input id="loadValueInput" type="number">
       <select id="loadUnitSelect">
@@ -49,11 +49,11 @@
     <div id="supportDiv">
       <h3>Support</h3>
       <p id="supportNotice">Select a joint to add support<br>Or click on a support to change it</p>
-      <img class="supportImage" id="pinned" onclick="supportHandlers.changeColor(this)" src="pinnedSupport.svg"/>
-      <img class="supportImage" id="rollerBottom" onclick="supportHandlers.changeColor(this)" src="rollerSupportBottom.svg"/>
-      <img class="supportImage" id="rollerTop" onclick="supportHandlers.changeColor(this)" src="rollerSupportTop.svg"/>
-      <img class="supportImage" id="rollerRight" onclick="supportHandlers.changeColor(this)" src="rollerSupportRight.svg"/>
-      <img class="supportImage" id="rollerLeft" onclick="supportHandlers.changeColor(this)" src="rollerSupportLeft.svg"/>
+      <img class="supportImage" id="pinned" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FpinnedSupport.svg"/>
+      <img class="supportImage" id="rollerBottom" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportBottom.svg"/>
+      <img class="supportImage" id="rollerTop" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportTop.svg"/>
+      <img class="supportImage" id="rollerRight" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportRight.svg"/>
+      <img class="supportImage" id="rollerLeft" onclick="supportHandlers.changeColor(this)" src="https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2FrollerSupportLeft.svg"/>
       <br>
       <button id="supportButton" onclick="supportHandlers.updateSupport()">Add/Update</button>
       <button id="deleteSupportButton" onclick="supportHandlers.deleteSupport()" style="display:none;">Delete Support</button>
@@ -91,15 +91,18 @@
       <button class="displayButton" style="margin-left:0px;" id="displacementButton" onclick="analysisButtonHandlers.displacement();">Displacement</button>
       <button class="displayButton" style="margin-left:3px;" id="eraseButton" onclick="analysisButtonHandlers.stopDisplaying();">Stop Displaying</button>
     </div>
-
     <div style="color:white;" id="saveAndOpen">
       Save Progress <button onclick="saveAndOpen.save()">Save to file</button><br>
-      Erase Drawing <button onclick="saveAndOpen.clean();">Clean the Board</button>
+      Erase Drawing
+      <button onclick="saveAndOpen.clean();">Clean the Board</button>
       <br>
       Open Saved File<br><input type="file" id="fileInput">
       <button onclick="saveAndOpen.read()">Resume Work</button>
     </div>
+    
     <footer style="color:white; position: absolute; bottom: 5px;">© 2016 Bilige Yang, Swarthmore College</footer>
+    
+    
     
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
@@ -108,6 +111,7 @@
     <script src="svg.js"></script>
     <script src="svg.draggable.js"></script>
     <script src="math.js"></script>
+    <script src="FileSaver.js"></script>
     <script src="client.js"></script>
 
   </body>
