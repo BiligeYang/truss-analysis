@@ -1968,7 +1968,7 @@ var engine = {
         var cell = document.createElement("td");
         var cellText;
         var xCoord = (this.nodes[i+1][0]/scaleRatio).toFixed(3);
-        var yCoord = this.nodes[i+1][1]/scaleRatio.toFixed(3);
+        var yCoord = (this.nodes[i+1][1]/scaleRatio).toFixed(3);
         if(j===0){
           cellText = document.createTextNode(i+1);
         } else{
