@@ -92,9 +92,11 @@
       <button class="displayButton" style="margin-left:3px;" id="eraseButton" onclick="analysisButtonHandlers.stopDisplaying();">Stop Displaying</button>
     </div>
 
-    <div id="saveAndOpen">
-      <button onclick="saveAndOpen.save()">Save to file</button>
-      <button>Open file</button>
+    <div style="color:white;" id="saveAndOpen">
+      Save Progress <button onclick="saveAndOpen.save()">Save to file</button>
+      <br>
+      Open Saved File<br><input type="file" id="fileInput">
+      <button onclick="saveAndOpen.read()">Resume Work</button>
     </div>
     
     
