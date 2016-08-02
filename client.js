@@ -1729,13 +1729,13 @@ var engine = {
         if (math.isInteger((index+2)/2) === true) {//which means it is the x direction reaction force
           if(element > 0){//meaning it is pointing right
             engine.reactionArrows.push({
-              img: draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Fgreen-right-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]-reactionSize-20,nodeSvgCoord[1]-reactionSize*0.5).front(),
+              img: draw.image("green-right-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]-reactionSize-20,nodeSvgCoord[1]-reactionSize*0.5).front(),
               background: draw.rect(40,12).fill("white").move(nodeSvgCoord[0]-reactionSize-20-2,nodeSvgCoord[1]-reactionSize*0.4-3.5),
               number: draw.text(element.toPrecision(6).toString()).move(nodeSvgCoord[0]-reactionSize-20,nodeSvgCoord[1]-reactionSize*0.4).front().font({size:10}).fill({color:"#138B29"})
             });
           } else {//pointing left
             engine.reactionArrows.push({
-              img: draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Fgreen-left-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]+reactionSize*0.3,nodeSvgCoord[1]-reactionSize*0.5).front(),
+              img: draw.image("green-left-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]+reactionSize*0.3,nodeSvgCoord[1]-reactionSize*0.5).front(),
               background: draw.rect(40,12).fill("white").move(nodeSvgCoord[0]+reactionSize*0.45-2,nodeSvgCoord[1]-reactionSize*0.4-3.5),
               number: draw.text(element.toPrecision(6).toString()).move(nodeSvgCoord[0]+reactionSize*0.45,nodeSvgCoord[1]-reactionSize*0.4).front().font({size:10}).fill({color:"#138B29"})
             });
@@ -1743,13 +1743,13 @@ var engine = {
         } else {//y direction force
           if(element > 0){//meaning it is pointing up
             engine.reactionArrows.push({
-              img: draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Fgreen-up-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]-reactionSize*0.5,nodeSvgCoord[1]+25).front(),
+              img: draw.image("green-up-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]-reactionSize*0.5,nodeSvgCoord[1]+25).front(),
               background: draw.rect(40,12).fill("white").move(nodeSvgCoord[0]+reactionSize*0.1-2,nodeSvgCoord[1]+25+reactionSize*0.4-3.5),
               number: draw.text(element.toPrecision(6).toString()).move(nodeSvgCoord[0]+reactionSize*0.1,nodeSvgCoord[1]+25+reactionSize*0.4).front().font({size:10}).fill({color:"#138B29"})
             });
           } else {//pointing down
             engine.reactionArrows.push({
-              img: draw.image("https://cdn.hyperdev.com/us-east-1%3Af2806c7b-a385-4be5-a88d-fdca7ba5d897%2Fgreen-down-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]-reactionSize*0.5,nodeSvgCoord[1]-reactionSize*1.2).front(),
+              img: draw.image("green-down-arrow.svg").size(reactionSize,reactionSize).move(nodeSvgCoord[0]-reactionSize*0.5,nodeSvgCoord[1]-reactionSize*1.2).front(),
               background: draw.rect(40,12).fill("white").move(nodeSvgCoord[0]+reactionSize*0.1-2,nodeSvgCoord[1]-reactionSize*0.7-3.5),
               number: draw.text(element.toPrecision(6).toString()).move(nodeSvgCoord[0]+reactionSize*0.1,nodeSvgCoord[1]-reactionSize*0.7).front().font({size:10}).fill({color:"#138B29"})
             });
