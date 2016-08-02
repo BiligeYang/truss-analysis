@@ -68,7 +68,7 @@ var jointPoints = {
       yValue: jointYValue,
       trussX: Number((jointXValue - originXvalue).toFixed(3)),
       trussY: Number((originYvalue - jointYValue).toFixed(3)),
-      circle: draw.circle(7).move(jointXValue - 3.5, jointYValue - 3.5).stroke({width: 10, opacity: 0, color: "#19EA48"}).attr({fill: '#808080'}),
+      circle: draw.circle(7).move(jointXValue - 3.5, jointYValue - 3.5).stroke({width: 10, opacity: 0, color: "#19EA48"}).attr({fill: '#808080'}).draggable(),
       load: [0, 0, 0, 0],
       loadToRight: undefined,
       loadToLeft: undefined,
