@@ -2251,18 +2251,25 @@ function saveFile(content){
   saveAs(file);
 }
 
+var filePoints;
+var fileLineProp;
+var fileHiddenLines;
+var fileSet;
+var fileLoad;
+var fileSupport;
+var fileResult;
 
 var saveAndOpen = {
   save:function(){
     //points
-    content = "var points = [";
+    content = "filePoints = [";
     jointPoints.points.forEach(function(point){
       content = content.concat(point.xValue,",",point.yValue,",");
     });
     content = content.slice(0,-1);
     content = content.concat("]; ");
     //hide hidden lines
-    content = content.concat("var hiddenLines = [");
+    content = content.concat("fileHiddenLines = [");
     jointPoints.links.forEach(function(link,index,array){
       if(link.line.visible()===false){
         content = content.concat(Number(index),",");
@@ -2272,14 +2279,25 @@ var saveAndOpen = {
       content = content.slice(0,-1);
     }
     content = content.concat("]; ");
+    //get line properties(A and E)
+    content = content.concat("fileLineProp = {");
+    jointPoints.links.forEach(function(link,index,array){
+      if(typeof link.area !=="undefined"){
+        content = content.concat(index+":"+"["+link.area.toString()+","+link.e.toString()+"],");
+      }
+    });
+    if (content.slice(-1) == ","){
+      content = content.slice(0,-1);
+    }
+    content = content.concat("}; ");
     //set dependency
-    content = content.concat("var setArray = [");
+    content = content.concat("fileSet = [");
     content = content.concat(dependency.toString());
     content = content.concat("]; ");
     //scale unit and ratio
     content = content.concat("scaleRatio = "+scaleRatio.toString()+"; ");
     //get load
-    content = content.concat("var loadArray = {");
+    content = content.concat("fileLoad = {");
     jointPoints.points.forEach(function(each,index){
       if (each.load.every(isZero) === false) {
          content = content.concat(index+":"+"["+each.load.toString()+"],");
@@ -2290,8 +2308,36 @@ var saveAndOpen = {
     }
     content = content.concat("}; ");
     //get Support
-    
+    content = content.concat("filSupport = {");
+    jointPoints.points.forEach(function(each,index){
+      if(typeof each.support !== "undefined"){
+        content = content.concat(index+":"+each.support.toString()+",");
+      }
+    });
+    if (content.slice(-1) == ","){
+      content = content.slice(0,-1);
+    }
+    content = content.concat("}; ");
     
     saveFile(content);
+  },
+  read: function(){
+    eval(fileResult);//get filePoints, fileHiddenLines, fileSupport, fileLoad
   }
 };
+
+window.onload = function() {//prepare the file result when file is loaded
+  var fileInput = document.getElementById('fileInput');
+  fileInput.addEventListener('change', function(e) {
+    var file = fileInput.files[0];
+    var textType = /text.*/;
+    if (file.type.match(textType)) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        fileResult = reader.result;
+      };
+      reader.readAsText(file);   
+    }
+  });
+};
+
