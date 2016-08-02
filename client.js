@@ -42,6 +42,8 @@ var scaleUnit = scaleSelection.options[scaleSelectedIndex].value;
 var forceUnit;
 var stressUnit;
 
+var dependency = [];
+
 drawInDom = document.getElementById('drawing');
 drawingStartButton = document.getElementById('drawingStart');
 var hitButton = 0;
@@ -487,20 +489,20 @@ var handlers = { //The methods here handles all direct interaction with the user
       jointX = event.target.getAttribute('cx');
       jointY = event.target.getAttribute('cy');
       jointPoints.addPoint(jointX, jointY);
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      //jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
       setDependency = true;
     } else if (event.target.id === originId) {
       jointX = event.target.getAttribute('cx');
       jointY = event.target.getAttribute('cy');
       jointPoints.addPoint(jointX, jointY);
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      //jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
       setDependency = false;
     } else if (event.target.tagName === "line"&&event.target.id!=="movingLine"){//put a node on a line
       event.target.instance.hide();//hide the line being hit
       jointX = event.clientX - drawInDom.offsetLeft + window.pageXOffset;
       jointY = event.clientY - drawInDom.offsetTop + window.pageYOffset;
       jointPoints.addPoint(jointX, jointY);
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      //jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
       hitButton++;
       setDependency = false;
       //create two new lines
@@ -509,12 +511,15 @@ var handlers = { //The methods here handles all direct interaction with the user
       var x2 = Number(event.target.getAttribute("x2"));
       var y2 = Number(event.target.getAttribute("y2"));
       var firstCircle;
+      var firstCircleIndex;
       var secondCircle;
+      var secondCircleIndex;
       jointPoints.addPoint(x1, y1);
       var newCircleId = jointPoints.points[jointPoints.points.length - 1].circle.attr("id");
-      jointPoints.points.forEach(function(point){// find the first circle of the hit line
+      jointPoints.points.forEach(function(point,index){// find the first circle of the hit line
         if(point.xValue == x1 && point.yValue==y1 && point.circle.attr("id")!==newCircleId){
           firstCircle = point.circle;
+          firstCircleIndex = Number(index);
         }
       });
       jointPoints.sets.push({// set dependency of the left redundant circles
@@ -522,7 +527,7 @@ var handlers = { //The methods here handles all direct interaction with the user
         setXvalue: x1,
         setYvalue: y1
       });
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      dependency.push(jointPoints.points.length - 1,firstCircleIndex);
       
       jointPoints.addPoint(jointX, jointY);//the invisible round way line
       jointPoints.links[jointPoints.links.length-1].line.hide();
@@ -531,13 +536,14 @@ var handlers = { //The methods here handles all direct interaction with the user
         setXvalue: jointX,
         setYvalue: jointY
       });
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      dependency.push(jointPoints.points.length - 1,jointPoints.points.length - 3);
       
       jointPoints.addPoint(x2, y2);
       newCircleId = jointPoints.points[jointPoints.points.length - 1].circle.attr("id");
-      jointPoints.points.forEach(function(point){// find the second circle of the hit line
+      jointPoints.points.forEach(function(point,index){// find the second circle of the hit line
         if(point.xValue == x2 && point.yValue==y2 && point.circle.attr("id")!==newCircleId ){
           secondCircle = point.circle;
+          secondCircleIndex = Number(index);
         }
       });
       jointPoints.sets.push({// set dependency
@@ -545,7 +551,7 @@ var handlers = { //The methods here handles all direct interaction with the user
         setXvalue: x2,
         setYvalue: y2
       });
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      dependency.push(jointPoints.points.length - 1,secondCircleIndex);
       
       jointPoints.addPoint(jointX, jointY);//the invisible round way line 2
       jointPoints.links[jointPoints.links.length-1].line.hide();
@@ -554,13 +560,12 @@ var handlers = { //The methods here handles all direct interaction with the user
         setXvalue: jointX,
         setYvalue: jointY
       });
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
+      dependency.push(jointPoints.points.length - 1,jointPoints.points.length - 3);
       
     } else {
       jointX = event.clientX - drawInDom.offsetLeft + window.pageXOffset;
       jointY = event.clientY - drawInDom.offsetTop + window.pageYOffset;
       jointPoints.addPoint(jointX, jointY);
-      jointPoints.points[jointPoints.points.length - 1].circle.draggable(); //Make the new added circle draggable
       setDependency = false;
     }
 
@@ -573,6 +578,7 @@ var handlers = { //The methods here handles all direct interaction with the user
         setXvalue: event.target.getAttribute('cx'),
         setYvalue: event.target.getAttribute('cy')
       });
+      dependency.push(jointPoints.points.length - 1,targetCircleIndex);
     }
     hitButton++;
   },
