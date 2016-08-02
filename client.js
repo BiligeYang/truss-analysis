@@ -2295,7 +2295,7 @@ var saveAndOpen = {
     content = content.concat(dependency.toString());
     content = content.concat("]; ");
     //scale unit and ratio
-    content = content.concat("scaleRatio = "+scaleRatio.toString()+"; ");
+    content = content.concat("scaleValue = "+scaleValue.toString()+"; ");
     //get load
     content = content.concat("fileLoad = {");
     jointPoints.points.forEach(function(each,index){
@@ -2308,10 +2308,10 @@ var saveAndOpen = {
     }
     content = content.concat("}; ");
     //get Support
-    content = content.concat("filSupport = {");
+    content = content.concat("fileSupport = {");
     jointPoints.points.forEach(function(each,index){
       if(typeof each.support !== "undefined"){
-        content = content.concat(index+":"+each.support.toString()+",");
+        content = content.concat(index+":"+'"'+each.support.toString()+'"'+",");
       }
     });
     if (content.slice(-1) == ","){
@@ -2322,7 +2322,79 @@ var saveAndOpen = {
     saveFile(content);
   },
   read: function(){
-    eval(fileResult);//get filePoints, fileHiddenLines, fileSupport, fileLoad
+    //get filePoints, fileLineProp, fileHiddenLines, fileSupport, fileLoad
+    
+    eval(fileResult);//POTENTIAL DANGER:since user can upload bad code and hack the page.
+                     //But javascript code can only mess up client side. No damage can be done on the server.
+    
+    //set the scale
+    document.getElementById("scaleInput").value = scaleValue;
+
+    //adding the points
+    for(i = 0;i<filePoints.length/2;i++){
+      jointPoints.addPoint(filePoints[2*i],filePoints[2*i+1]);
+      hitButton++;
+    }
+    handlers.updateCircleIdArray();//update circleIdArray
+    //setting dependencies
+    for(i = 0;i<fileSet.length/2;i++){
+      jointPoints.sets.push({
+        set: draw.set().add(jointPoints.points[fileSet[2*i]].circle, jointPoints.points[fileSet[2*i+1]].circle),
+        setXvalue: jointPoints.points[2*i].xValue,
+        setYvalue: jointPoints.points[2*i].yValue
+      });
+    }
+    //hiding the hidden lines
+    fileHiddenLines.forEach(function(element){
+      jointPoints.links[element].line.hide();
+    });
+    //also delete lone dots from the hidden lines
+    if (typeof jointPoints.links[0] ==="undefined"){
+      if (typeof jointPoints.points[0] !=="undefined"){
+        jointPoints.points[0].circle.hide();}
+    } else if (jointPoints.links[0].line.visible() === false) { //if the first line is hidden, hide the first dot
+      jointPoints.points[0].circle.hide();
+    }
+    if (jointPoints.links[jointPoints.links.length - 1].line.visible() === false) { //if the last line is hidden, hide the last dot
+      jointPoints.points[jointPoints.points.length - 1].circle.hide();
+    }
+    for (var i = 0; i < jointPoints.links.length - 1; i++) { //if two consecutive lines are hidden, hide the middle dot
+      if (jointPoints.links[i].line.visible() === false && jointPoints.links[i + 1].line.visible() === false) {
+        jointPoints.points[i + 1].circle.hide();
+      }
+    }
+    //add load
+    var fileLoadKeys = Object.keys(fileLoad);
+    fileLoadKeys.forEach(function(key){
+      for(i = 0; i<4 ;i++){
+        if(fileLoad[key][i] !== 0){
+          jointPoints.addLoad(key,i,fileLoad[key][i]);
+        }
+      }
+    });
+    //add support
+    var fileSupportKeys = Object.keys(fileSupport);
+    fileSupportKeys.forEach(function(key){
+      jointPoints.addSupport(key,fileSupport[key]);
+    });
+    //add member properties
+    var fileLinePropKeys = Object.keys(fileLineProp);
+    fileLinePropKeys.forEach(function(key){
+      var sectionArea = fileLineProp[key][0];
+      var color;
+      if(sectionArea in areaColor){// check whether the area is the same with existing line color areas
+        color = areaColor[sectionArea];
+      } else {//if not push it in
+        color = availableColor[0];
+        areaColor[sectionArea] = availableColor[0];
+        availableColor = availableColor.slice(1,availableColor.length).concat(availableColor[0]);
+      }
+      jointPoints.links[key].area = sectionArea;//set the member section area
+      jointPoints.links[key].line.attr({stroke:color});//set the line to be colored
+      
+      jointPoints.links[key].e = fileLineProp[key][1];//set the young's modulus of the member
+      
+    });
   }
 };
 
