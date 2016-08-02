@@ -2303,8 +2303,8 @@ var saveAndOpen = {
     for(i = 0;i<fileSet.length/2;i++){
       jointPoints.sets.push({
         set: draw.set().add(jointPoints.points[fileSet[2*i]].circle, jointPoints.points[fileSet[2*i+1]].circle),
-        setXvalue: jointPoints.points[2*i].xValue,
-        setYvalue: jointPoints.points[2*i].yValue
+        setXvalue: jointPoints.points[fileSet[2*i]].xValue,
+        setYvalue: jointPoints.points[fileSet[2*i]].yValue
       });
     }
     //hiding the hidden lines
