@@ -1191,20 +1191,8 @@ var engine = {
   getNodes: function() {
     this.nodesArray = [];
     this.nodes = {};
-    
     jointPoints.points.forEach(function(point) {
-      //debugger;
       if (point.circle.visible() === true) {
-        /*
-        var currentNodeXIndex = this.nodesArray.indexOf(point.trussX);
-        var newNodeArray = this.Object.keys(this.nodes).length*2.slice(0,currentNodeXIndex).concat(this.nodesArray.slice(currentNodeXIndex+1,math.add));
-        var newNodeYIndex = newNodeArray.indexOf(point.trussY);
-        if (currentNodeXIndex == newNodeYIndex && currentNodeXIndex != -1 ){
-          //nothing happens
-        } else {
-          this.nodesArray.push(point.trussX, point.trussY);
-        }
-        */
         var nodesKeys = Object.keys(this.nodes);
         numberOfNodes = nodesKeys.length;
         var repeatCount = 0;
