@@ -2384,6 +2384,9 @@ var saveAndOpen = {
       jointPoints.links[key].e = fileLineProp[key][1];//set the young's modulus of the member
       
     });
+  },
+  clean: function(){
+    window.location.reload(false); 
   }
 };
 
