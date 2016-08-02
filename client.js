@@ -1567,7 +1567,7 @@ var engine = {
     tbl.style.zIndex = 3;
     tbl.style.position = 'absolute';
     tbl.style.left = "920px";
-    tbl.style.top = "230px";
+    tbl.style.top = "275px";
     tbl.style.width = "200px";
     tbl.style.backgroundColor = "white";
   },
@@ -1718,7 +1718,7 @@ var engine = {
     tbl.style.zIndex = 3;
     tbl.style.position = 'absolute';
     tbl.style.left = "920px";
-    tbl.style.top = "230px";
+    tbl.style.top = "275px";
     tbl.style.width = "200px";
     tbl.style.backgroundColor = "white";
   },
@@ -1924,7 +1924,7 @@ var engine = {
     tbl.style.zIndex = 3;
     tbl.style.position = 'absolute';
     tbl.style.left = "920px";
-    tbl.style.top = "230px";
+    tbl.style.top = "275px";
     tbl.style.width = "200px";
     tbl.style.backgroundColor = "white";
   },
@@ -2017,7 +2017,7 @@ var engine = {
     tbl.style.zIndex = 3;
     tbl.style.position = 'absolute';
     tbl.style.left = "920px";
-    tbl.style.top = "230px";
+    tbl.style.top = "275px";
     tbl.style.width = "200px";
     tbl.style.backgroundColor = "white";
   },
@@ -2126,7 +2126,7 @@ var engine = {
     tbl.style.zIndex = 3;
     tbl.style.position = 'absolute';
     tbl.style.left = "920px";
-    tbl.style.top = "230px";
+    tbl.style.top = "275px";
     tbl.style.width = "200px";
     tbl.style.backgroundColor = "white";
   },
