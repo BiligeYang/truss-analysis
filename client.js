@@ -1216,20 +1216,9 @@ var engine = {
         if (repeatCount ===0){
           this.nodes[numberOfNodes+1] = [point.trussX, point.trussY];
         }
-        /* if (currentNodeXIndex > -1 && currentNodeXIndex % 2 === 0 && currentNodeYIndex === (currentNodeXIndex + 1)) {
-          //nothing happens
-        } else if (currentNodeXIndex === currentNodeYIndex){
-          //nothing happens
-        }else {
-          this.nodesArray.push(point.trussX, point.trussY);
-        } */
-      }
-      /*
-      for (i = 0; i < (Object.keys(this.nodes).length / 2); i++) {
-        this.nodes[i + 1] = [this.nodesArray[i * 2], this.nodesArray[i * 2 + 1]];
-      } */
-
     }, engine);
+    var nodesKeys = Object.keys(this.nodes);
+    numberOfNodes = nodesKeys.length;
   },
   defineK: function(){
     Ks = math.zeros(math.matrix([Object.keys(this.nodes).length*2,Object.keys(this.nodes).length*2]));//define Ks
