@@ -150,9 +150,13 @@ p{
   position:absolute;
   top:620px;
   left:600px;
+  width:295px;
   background-color:#2C75BE;
   padding:5px;
   border-radius:5px;
   margin:5px;
 }
 
+#fileInput{
+  width:160px;
+}
