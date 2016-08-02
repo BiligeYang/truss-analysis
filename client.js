@@ -168,16 +168,6 @@ var jointPoints = {
 
   addLoad: function(circleIndex, directionIndex, magnitude) {
     this.points[circleIndex].load[directionIndex] = magnitude;
-    /*if(allLoadArray.length !== 0) {
-      //enlargeBy = (magnitude/Math.min.apply(null,allLoadArray))*(5/maxOverMin);
-      enlargeBy = magnitude/Math.min.apply(null,allLoadArray);
-      if (enlargeBy >5){
-        enlargeBy = 5;
-      }
-    } else {
-      enlargeBy = 1;
-    }*/
-    //var arrowSideLength = 20*enlargeBy;
     var arrowSideLength = 20;
     if (directionIndex === 0) {
       this.points[circleIndex].loadToRight =
