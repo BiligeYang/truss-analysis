@@ -1282,6 +1282,7 @@ var engine = {
     },engine);
   },
   getSupport: function() {
+    this.support = {}; //new edit
     this.getNodes();
     jointPoints.points.forEach(function(point) {
       if (typeof point.support !== "undefined") {
