@@ -2308,6 +2308,7 @@ var saveAndOpen = {
         setYvalue: jointPoints.points[fileSet[2*i]].yValue
       });
     }
+    dependency = fileSet;
     //hiding the hidden lines
     fileHiddenLines.forEach(function(element){
       jointPoints.links[element].line.hide();
